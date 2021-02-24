@@ -4,11 +4,11 @@
 Name:           python-%{pkgname}
 # NOTICE - Updating this package requires updating python-boto3
 Version:        1.20.14
-Release:        CROC1%{?buildid}%{?dist}
+Release:        CROC1TEST%{?buildid}%{?dist}
 Summary:        Low-level, data-driven core of boto 3
 
 License:        ASL 2.0
-URL:            https://github.com/boto/botocore
+URL:            https://github.com/C2Devel/botocore.git
 Source0:        https://pypi.io/packages/source/b/botocore/botocore-%{version}.tar.gz
 BuildArch:      noarch
 
@@ -20,18 +20,19 @@ botocore package is the foundation for the AWS CLI as well as boto3.
 Summary:        Low-level, data-driven core of boto 3
 BuildRequires:  python%{python3_pkgversion}-devel
 BuildRequires:  python%{python3_pkgversion}-setuptools
-%{?python_provide:%python_provide python%{python3_pkgversion}-%{pkgname}}
-Requires:       python%{python3_pkgversion}-jmespath
+Provides:       python%{python3_pkgversion}-%{pkgname}
+Requires:       python%{python3_pkgversion}-jmespath >= 0.7.1
+Requires:       python%{python3_pkgversion}-dateutil >= 2.1
 
 %description -n python%{python3_pkgversion}-%{pkgname}
 A low-level interface to a growing number of Amazon Web Services. The
 botocore package is the foundation for the AWS CLI as well as boto3.
 
 %prep
-%autosetup -n %{pkgname}-%{version}
-rm -vr %{pkgname}.egg-info
+%setup -q -n %{pkgname}-%{version}
+rm -rf %{pkgname}.egg-info
 # Remove online tests
-rm -vr tests/integration
+rm -rf tests/integration
 
 %build
 %py3_build
