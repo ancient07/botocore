@@ -48,6 +48,10 @@ rm -rf tests/integration
 %{python3_sitelib}/%{pkgname}-*.egg-info/
 
 %changelog
+* Fri Sep 24 2021 Alex Rudenko <arudenko@croc.ru> - 1.20.14-CROC5
+- spec: add urllib3 1.90 to dependencies
+- spec: remove build for py2
+
 * Mon Aug 23 2021 Andrey Kulaev <akulaev@croc.ru> - 1.20.14-CROC4
 - eks: deploying a high availability cluster in multiple AZ
 - eks: add ModifySecurityGroups operations
