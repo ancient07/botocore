@@ -1,0 +1,393 @@
+{
+  "version": "2.0",
+  "metadata": {
+    "apiVersion": "2022-09-06",
+    "endpointPrefix": "paas",
+    "jsonVersion": "1.1",
+    "protocol": "rest-json",
+    "serviceFullName": "AWS PaaS",
+    "serviceId": "PaaS",
+    "signatureVersion": "v4",
+    "uid": "paas-2022-09-06"
+  },
+  "operations": {
+    "CreateCluster": {
+      "name": "CreateCluster",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/clusters"
+      },
+      "input": {"shape": "CreateClusterRequest"},
+      "output":{"shape":"CreateClusterResponse"},
+      "documentation":"<p>Creates PaaS cluster.</p>"
+    },
+    "DeleteCluster":{
+      "name":"DeleteCluster",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/clusters/{name}"
+      },
+      "input":{"shape":"DeleteClusterRequest"},
+      "output":{"shape":"DeleteClusterResponse"},
+      "documentation":"<p>Deletes PaaS cluster.</p>"
+    },
+    "DescribeCluster": {
+      "name": "DescribeCluster",
+      "http": {
+        "method": "GET",
+        "requestUri": "/clusters/{name}"
+      },
+      "input": {"shape":"DescribeClusterRequest"},
+      "output":{"shape":"DescribeClusterResponse"},
+      "documentation":"<p>Returns descriptive information about PaaS cluster.</p>"
+    },
+    "DescribeTemplate": {
+      "name": "DescribeTemplate",
+      "http": {
+        "method": "GET",
+        "requestUri": "/templates/{name}"
+      },
+      "input": {"shape": "DescribeTemplateRequest"},
+      "output":{"shape":"DescribeTemplateResponse"},
+      "documentation":"<p>Returns descriptive information about PaaS template.</p>"
+    },
+    "ListClusters":{
+      "name":"ListClusters",
+      "http":{
+        "method":"GET",
+        "requestUri":"/clusters"
+      },
+      "input":{"shape":"ListClustersRequest"},
+      "output":{"shape":"ListClustersResponse"},
+      "documentation":"<p>Lists PaaS clusters.</p>"
+    },
+    "ListTemplates":{
+      "name":"ListTemplates",
+      "http":{
+        "method":"GET",
+        "requestUri":"/templates"
+      },
+      "input":{"shape":"ListTemplatesRequest"},
+      "output":{"shape":"ListTemplatesResponse"},
+      "documentation":"<p>Lists PaaS templates.</p>"
+    },
+    "ModifyCluster":{
+      "name":"ModifyCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/clusters/{name}"
+      },
+      "input":{"shape":"ModifyClusterRequest"},
+      "output":{"shape":"ModifyClusterResponse"},
+      "documentation":"<p>Modifies PaaS cluster.</p>"
+    }
+  },
+  "shapes": {
+    "Boolean":{"type":"boolean"},
+    "Cluster":{
+      "type": "structure",
+      "members": {
+        "template":{"shape":"String"},
+        "name":{"shape":"String"},
+        "class":{"shape":"String"},
+        "subnets": {"shape": "StringList"},
+        "network_interfaces": {"shape": "StringList"},
+        "security_groups": {"shape": "SecurityGroupList"},
+        "root_volume_type":{"shape":"String"},
+        "root_volume_size":{"shape":"Integer"},
+        "root_volume_iops":{"shape":"Integer"},
+        "data_volume_type":{"shape":"String"},
+        "data_volume_size":{"shape":"Integer"},
+        "data_volume_iops":{"shape":"Integer"},
+        "instance_type":{"shape":"String"},
+        "highly_available":{"shape":"Boolean"},
+        "instance_qty":{"shape":"Integer"},
+        "keypair":{"shape":"String"},
+        "parameters": {"shape": "None"},
+        "users":{"shape": "UserList"},
+        "databases": {"shape": "DatabaseList"},
+        "status": {"shape":"String"},
+        "error_code": {"shape":"String"},
+        "error_description": {"shape":"String"},
+        "endpoints": {"shape":"StringList"},
+        "instances": {"shape":"InstanceList"},
+        "supported_features": {"shape": "StringList"},
+        "total_cpu_count":{"shape":"Integer"},
+        "total_memory":{"shape":"Integer"},
+        "databases_modification": {"shape":"None"},
+        "users_modification": {"shape":"None"}
+      }
+    },
+    "CreateClusterRequest": {
+      "type": "structure",
+      "required": [
+        "template",
+        "name",
+        "class_name",
+        "security_groups",
+        "root_volume_type",
+        "root_volume_size",
+        "instance_type",
+        "highly_available",
+        "parameters"
+      ],
+      "members": {
+        "name": {"shape":"String"},
+        "template": {"shape":"String"},
+        "class_name": {"shape":"String"},
+        "subnets": {"shape": "StringList"},
+        "network_interfaces": {"shape": "StringList"},
+        "security_groups": {"shape": "StringList"},
+        "root_volume_type":{"shape":"String"},
+        "root_volume_size":{"shape":"Integer"},
+        "root_volume_iops":{"shape":"Integer"},
+        "data_volume_type":{"shape":"String"},
+        "data_volume_size":{"shape":"Integer"},
+        "data_volume_iops":{"shape":"Integer"},
+        "instance_type":{"shape":"String"},
+        "highly_available":{"shape":"Boolean"},
+        "instance_qty":{"shape":"Integer"},
+        "keypair":{"shape":"String"},
+        "parameters": {"shape": "None"},
+        "users":{"shape": "UserList"},
+        "databases": {"shape": "DatabaseList"},
+        "arbitrator_required": {"shape": "Boolean"}
+      }
+    },
+    "CreateClusterResponse":{
+      "type":"structure",
+      "members":{
+        "cluster":{
+          "shape":"Cluster",
+          "documentation":"<p>The full description of your new cluster.</p>"
+        }
+      }
+    },
+    "Database":{
+      "type": "structure",
+      "required":[
+        "name",
+        "users"
+      ],
+      "members": {
+        "name": {"shape":"String"},
+        "parameters": {"shape": "None"},
+        "users": {"shape": "UserList"}
+      }
+    },
+    "DatabaseList": {
+      "type": "list",
+      "member":{"shape": "Database"}
+    },
+    "DeleteClusterRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "template",
+        "class_name",
+        "delete_interfaces"
+      ],
+      "members":{
+        "name": {
+          "shape": "String",
+          "documentation": "<p>The name of the cluster to delete.</p>",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "template": {
+          "shape": "String",
+          "documentation": "<p>The template name of the cluster to delete.</p>"
+        },
+        "class_name": {
+          "shape": "String",
+          "documentation": "<p>The class name of the cluster to delete.</p>"
+        },
+        "delete_interfaces": {
+          "shape": "Boolean",
+          "documentation": "<p>Delete interfaces with cluster.</p>"
+        }
+      }
+    },
+    "DeleteClusterResponse":{
+      "type":"structure",
+      "members":{
+        "cluster":{
+          "shape":"Cluster",
+          "documentation":"<p>The full description of the cluster to delete.</p>"
+        }
+      }
+    },
+    "DescribeClusterRequest": {
+      "type": "structure",
+      "required": [
+        "name",
+        "template",
+        "class_name"
+      ],
+      "members": {
+        "name": {
+          "shape": "String",
+          "documentation": "<p>The name of the cluster to describe.</p>",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "template": {
+          "shape": "String",
+          "documentation": "<p>The template name of the cluster to describe.</p>"
+        },
+        "class_name": {
+          "shape": "String",
+          "documentation": "<p>The class name of the cluster to describe.</p>"
+        }
+      }
+    },
+    "DescribeClusterResponse":{
+      "type":"structure",
+      "members":{
+        "cluster":{
+          "shape":"Cluster",
+          "documentation":"<p>The full description of your specified cluster.</p>"
+        }
+      }
+    },
+    "DescribeTemplateRequest": {
+      "type": "structure",
+      "required": ["name"],
+      "members": {
+        "name": {
+          "shape": "String",
+          "documentation": "<p>The name of the template to describe.</p>",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "DescribeTemplateResponse":{
+      "type":"structure",
+      "members":{
+        "template":{
+          "shape":"None",
+          "documentation":"<p>The full description of your specified template.</p>"
+        }
+      }
+    },
+    "Instance": {
+      "type": "structure",
+      "members": {
+        "role": {"shape": "String"},
+        "instance_id": {"shape": "String"},
+        "private_ip": {"shape": "String"},
+        "interface_id": {"shape": "String"},
+        "status": {"shape": "String"},
+        "index": {"shape": "Integer"},
+        "endpoint": {"shape": "String"},
+        "name": {"shape": "String"}
+      }
+    },
+    "InstanceList": {
+      "type": "list",
+      "member":{"shape": "Instance"}
+    },
+    "Integer":{"type":"integer"},
+    "ListClustersRequest": {
+      "type":"structure",
+      "members": {
+        "template":{
+          "shape": "String",
+          "documentation":"<p>The cluster template name filter.</p>"
+        },
+        "class_name": {
+          "shape": "String",
+          "documentation": "<p>The cluster class name filter.</p>"
+        }
+      }
+    },
+    "ListClustersResponse": {
+      "type":"structure",
+      "members":{
+        "clusters":{
+          "shape":"StringList",
+          "documentation":"<p>A list of all of the clusters for your account in the specified Region.</p>"
+        }
+      }
+   },
+    "ListTemplatesRequest": {
+      "type":"structure",
+      "members":{
+        "class_name": {
+          "shape": "String",
+          "documentation":"<p>The template class name filter.</p>"
+        }
+      }
+    },
+    "ListTemplatesResponse":{
+      "type":"structure",
+      "members":{
+        "templates":{
+          "shape":"StringList",
+          "documentation":"<p>A list of all of the templates for your account in the specified Region.</p>"
+        }
+      }
+    },
+    "ModifyClusterRequest": {
+      "type": "structure",
+      "required": [
+        "class_name",
+        "template",
+        "name"
+      ],
+      "members": {
+        "class_name":{"shape":"String"},
+        "template":{"shape":"String"},
+        "name":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "users":{"shape": "UserList"},
+        "databases": {"shape": "DatabaseList"}
+      }
+    },
+    "ModifyClusterResponse": {
+      "type": "structure",
+      "members": {
+        "cluster": {
+          "shape": "Cluster",
+          "documentation":"<p>The full description of your modified cluster.</p>"
+        }
+      }
+    },
+    "None": {"type": "none"},
+    "SecurityGroup": {
+      "type": "structure",
+      "members":{
+        "_id":{"shape": "String"},
+        "created_automatically":{"shape": "Boolean"}
+      }
+    },
+    "SecurityGroupList": {
+      "type":"list",
+      "member":{"shape":"SecurityGroup"}
+    },
+    "String":{"type":"string"},
+    "StringList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "Timestamp":{"type":"timestamp"},
+    "User":{
+      "type":"structure",
+      "required":[
+        "name"
+      ],
+      "members":{
+        "name":{"shape": "String"},
+        "parameters":{"shape": "None"}
+      }
+    },
+    "UserList":{
+      "type":"list",
+      "member":{"shape": "User"}
+    }
+  }
+}
