@@ -21,6 +21,16 @@
       "output":{"shape":"CreateClusterResponse"},
       "documentation":"<p>Creates PaaS cluster.</p>"
     },
+    "DeleteBackups":{
+      "name":"DeleteBackups",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"clusters/{cluster_id}/backups"
+      },
+      "input":{"shape":"DeleteBackupsRequest"},
+      "output":{"shape":"DeleteBackupsResponse"},
+      "documentation":"<p>Deletes cluster backups.</p>"
+    },
     "DeleteCluster":{
       "name":"DeleteCluster",
       "http":{
@@ -30,6 +40,16 @@
       "input":{"shape":"DeleteClusterRequest"},
       "output":{"shape":"DeleteClusterResponse"},
       "documentation":"<p>Deletes PaaS cluster.</p>"
+    },
+    "DescribeBackup": {
+      "name": "DescribeBackup",
+      "http": {
+        "method": "GET",
+        "requestUri": "/backups/{backup_id}"
+      },
+      "input": {"shape":"DescribeBackupRequest"},
+      "output":{"shape":"DescribeBackupResponse"},
+      "documentation":"<p>Returns descriptive information about backup.</p>"
     },
     "DescribeCluster": {
       "name": "DescribeCluster",
@@ -50,6 +70,16 @@
       "input": {"shape": "DescribeTemplateRequest"},
       "output":{"shape":"DescribeTemplateResponse"},
       "documentation":"<p>Returns descriptive information about PaaS template.</p>"
+    },
+    "ListBackups":{
+      "name":"ListBackups",
+      "http":{
+        "method":"GET",
+        "requestUri":"/backups"
+      },
+      "input":{"shape":"ListBackupsRequest"},
+      "output":{"shape":"ListBackupsResponse"},
+      "documentation":"<p>Lists backups.</p>"
     },
     "ListClusters":{
       "name":"ListClusters",
@@ -83,6 +113,37 @@
     }
   },
   "shapes": {
+    "Backup":{
+      "type": "structure",
+      "members": {
+        "id": {"shape": "String"},
+        "cluster_name": {"shape": "String"},
+        "cluster_class": {"shape": "String"},
+        "cluster_template": {"shape": "String"},
+        "cluster_deleted": {"shape": "Boolean"},
+        "status": {"shape":"String"},
+        "time": {"shape":"Integer"},
+        "databases": {"shape": "DatabaseList"}
+      }
+    },
+    "BackupSettings":{
+      "type": "structure",
+      "required":[
+        "enabled",
+        "start_time",
+        "bucket_name",
+        "user_id"
+      ],
+      "members": {
+        "enabled": {"shape":"Boolean"},
+        "start_time": {"shape": "Integer"},
+        "bucket_name": {"shape": "String"},
+        "user_id": {"shape": "String"},
+        "user_name": {"shape": "String"},
+        "user_login": {"shape": "String"},
+        "notification_email": {"shape": "String"}
+      }
+    },
     "Boolean":{"type":"boolean"},
     "Cluster":{
       "type": "structure",
@@ -112,6 +173,7 @@
         "endpoints": {"shape":"StringList"},
         "instances": {"shape":"InstanceList"},
         "supported_features": {"shape": "StringList"},
+        "backup_settings": {"shape": "BackupSettings"},
         "total_cpu_count":{"shape":"Integer"},
         "total_memory":{"shape":"Integer"},
         "databases_modification": {"shape":"None"},
@@ -151,6 +213,7 @@
         "parameters": {"shape": "None"},
         "users":{"shape": "UserList"},
         "databases": {"shape": "DatabaseList"},
+        "backup_settings": {"shape": "BackupSettings"},
         "arbitrator_required": {"shape": "Boolean"}
       }
     },
@@ -171,6 +234,7 @@
       ],
       "members": {
         "name": {"shape":"String"},
+        "backup_enabled": {"shape": "Boolean"},
         "parameters": {"shape": "None"},
         "users": {"shape": "UserList"}
       }
@@ -178,6 +242,30 @@
     "DatabaseList": {
       "type": "list",
       "member":{"shape": "Database"}
+    },
+    "DeleteBackupsRequest":{
+      "type":"structure",
+      "required":[
+        "cluster_id"
+      ],
+      "members":{
+        "cluster_id": {
+          "shape": "String",
+          "documentation": "<p>The ID of the cluster.</p>",
+          "location":"uri",
+          "locationName":"cluster_id"
+        },
+        "backup_ids": {
+          "shape": "StringList",
+          "documentation": "<p>The IDs of backups to delete.</p>"
+        }
+      }
+    },
+    "DeleteBackupsResponse":{
+      "type":"structure",
+      "members": {
+
+      }
     },
     "DeleteClusterRequest":{
       "type":"structure",
@@ -214,6 +302,34 @@
         "cluster":{
           "shape":"Cluster",
           "documentation":"<p>The full description of the cluster to delete.</p>"
+        }
+      }
+    },
+    "DescribeBackupRequest": {
+      "type": "structure",
+      "required": [
+        "backup_id",
+        "apply_mappings"
+      ],
+      "members": {
+        "backup_id": {
+          "shape": "String",
+          "documentation": "<p>The ID of the cluster to describe.</p>",
+          "location":"uri",
+          "locationName":"backup_id"
+        },
+        "apply_mappings": {
+          "shape": "Boolean",
+          "documentation": "<p>Map backup database parameters according to template mappings.</p>"
+        }
+      }
+    },
+    "DescribeBackupResponse":{
+      "type":"structure",
+      "members":{
+        "backup":{
+          "shape":"Backup",
+          "documentation":"<p>The full description of your specified backup.</p>"
         }
       }
     },
@@ -289,6 +405,37 @@
       "member":{"shape": "Instance"}
     },
     "Integer":{"type":"integer"},
+    "ListBackupsRequest": {
+      "type":"structure",
+      "required": ["apply_mappings"],
+      "members": {
+         "class_name": {
+          "shape": "String",
+          "documentation": "<p>The cluster class name filter.</p>"
+        },
+        "template":{
+          "shape": "String",
+          "documentation":"<p>The cluster template name filter.</p>"
+        },
+        "cluster_id": {
+          "shape": "String",
+          "documentation": "<p>The cluster ID filter.</p>"
+        },
+        "apply_mappings": {
+          "shape": "Boolean",
+          "documentation": "<p>Map backup database parameters according to template mappings.</p>"
+        }
+      }
+    },
+    "ListBackupsResponse": {
+      "type":"structure",
+      "members":{
+        "backups":{
+          "shape":"StringList",
+          "documentation":"<p>A list of all backups for your account in the specified Region.</p>"
+        }
+      }
+   },
     "ListClustersRequest": {
       "type":"structure",
       "members": {
@@ -345,7 +492,8 @@
           "locationName":"name"
         },
         "users":{"shape": "UserList"},
-        "databases": {"shape": "DatabaseList"}
+        "databases": {"shape": "DatabaseList"},
+        "backup_settings": {"shape": "BackupSettings"}
       }
     },
     "ModifyClusterResponse": {
