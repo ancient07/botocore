@@ -148,8 +148,9 @@
     "Cluster":{
       "type": "structure",
       "members": {
-        "template":{"shape":"String"},
+        "id": {"shape":"String"},
         "name":{"shape":"String"},
+        "template":{"shape":"String"},
         "class":{"shape":"String"},
         "subnets": {"shape": "StringList"},
         "network_interfaces": {"shape": "StringList"},
@@ -162,7 +163,6 @@
         "data_volume_iops":{"shape":"Integer"},
         "instance_type":{"shape":"String"},
         "highly_available":{"shape":"Boolean"},
-        "instance_qty":{"shape":"Integer"},
         "keypair":{"shape":"String"},
         "parameters": {"shape": "None"},
         "users":{"shape": "UserList"},
@@ -175,9 +175,7 @@
         "supported_features": {"shape": "StringList"},
         "backup_settings": {"shape": "BackupSettings"},
         "total_cpu_count":{"shape":"Integer"},
-        "total_memory":{"shape":"Integer"},
-        "databases_modification": {"shape":"None"},
-        "users_modification": {"shape":"None"}
+        "total_memory":{"shape":"Integer"}
       }
     },
     "CreateClusterRequest": {
