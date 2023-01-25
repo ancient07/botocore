@@ -132,7 +132,7 @@
         "enabled",
         "start_time",
         "bucket_name",
-        "user_id"
+        "user_name"
       ],
       "members": {
         "enabled": {"shape":"Boolean"},
