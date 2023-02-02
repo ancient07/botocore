@@ -117,6 +117,7 @@
       "type": "structure",
       "members": {
         "id": {"shape": "String"},
+        "cluster_id": {"shape": "String"},
         "cluster_name": {"shape": "String"},
         "cluster_class": {"shape": "String"},
         "cluster_template": {"shape": "String"},
