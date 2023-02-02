@@ -124,7 +124,7 @@
         "cluster_deleted": {"shape": "Boolean"},
         "status": {"shape":"String"},
         "time": {"shape":"Integer"},
-        "databases": {"shape": "DatabaseList"}
+        "databases": {"shape": "DatabaseBackupList"}
       }
     },
     "BackupSettings":{
@@ -237,6 +237,24 @@
         "parameters": {"shape": "None"},
         "users": {"shape": "UserList"}
       }
+    },
+    "DatabaseBackup":{
+      "type": "structure",
+      "members": {
+        "name": {"shape":"String"},
+        "cluster_name": {"shape":"String"},
+        "cluster_id": {"shape":"String"},
+        "backup_id": {"shape":"String"},
+        "size": {"shape":"Integer"},
+        "status": {"shape":"String"},
+        "parameters": {"shape": "None"},
+        "logfile": {"shape":"String"},
+        "location": {"shape":"String"}
+      }
+    },
+    "DatabaseBackupList": {
+      "type": "list",
+      "member":{"shape": "DatabaseBackup"}
     },
     "DatabaseList": {
       "type": "list",
