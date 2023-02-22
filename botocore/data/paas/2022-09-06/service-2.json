@@ -11,35 +11,35 @@
     "uid": "paas-2022-09-06"
   },
   "operations": {
-    "CreateCluster": {
-      "name": "CreateCluster",
+    "CreateService": {
+      "name": "CreateService",
       "http": {
         "method": "PUT",
-        "requestUri": "/clusters"
+        "requestUri": "/services"
       },
-      "input": {"shape": "CreateClusterRequest"},
-      "output":{"shape":"CreateClusterResponse"},
-      "documentation":"<p>Creates PaaS cluster.</p>"
+      "input": {"shape": "CreateServiceRequest"},
+      "output": {"shape": "CreateServiceResponse"},
+      "documentation": "<p>Creates service.</p>"
     },
-    "DeleteBackups":{
-      "name":"DeleteBackups",
-      "http":{
-        "method":"DELETE",
-        "requestUri":"clusters/{cluster_id}/backups"
+    "DeleteBackups": {
+      "name": "DeleteBackups",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "services/{service_id}/backups"
       },
-      "input":{"shape":"DeleteBackupsRequest"},
-      "output":{"shape":"DeleteBackupsResponse"},
-      "documentation":"<p>Deletes cluster backups.</p>"
+      "input": {"shape": "DeleteBackupsRequest"},
+      "output": {"shape": "DeleteBackupsResponse"},
+      "documentation": "<p>Deletes service backups.</p>"
     },
-    "DeleteCluster":{
-      "name":"DeleteCluster",
-      "http":{
-        "method":"DELETE",
-        "requestUri":"/clusters/{name}"
+    "DeleteService": {
+      "name": "DeleteService",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/services/{service_id}"
       },
-      "input":{"shape":"DeleteClusterRequest"},
-      "output":{"shape":"DeleteClusterResponse"},
-      "documentation":"<p>Deletes PaaS cluster.</p>"
+      "input": {"shape": "DeleteServiceRequest"},
+      "output": {"shape": "DeleteServiceResponse"},
+      "documentation": "<p>Deletes service.</p>"
     },
     "DescribeBackup": {
       "name": "DescribeBackup",
@@ -47,144 +47,89 @@
         "method": "GET",
         "requestUri": "/backups/{backup_id}"
       },
-      "input": {"shape":"DescribeBackupRequest"},
-      "output":{"shape":"DescribeBackupResponse"},
-      "documentation":"<p>Returns descriptive information about backup.</p>"
+      "input": {"shape": "DescribeBackupRequest"},
+      "output": {"shape": "DescribeBackupResponse"},
+      "documentation": "<p>Returns descriptive information about backup.</p>"
     },
-    "DescribeCluster": {
-      "name": "DescribeCluster",
+    "DescribeService": {
+      "name": "DescribeService",
       "http": {
         "method": "GET",
-        "requestUri": "/clusters/{name}"
+        "requestUri": "/services/{service_id}"
       },
-      "input": {"shape":"DescribeClusterRequest"},
-      "output":{"shape":"DescribeClusterResponse"},
-      "documentation":"<p>Returns descriptive information about PaaS cluster.</p>"
+      "input": {"shape": "DescribeServiceRequest"},
+      "output": {"shape": "DescribeServiceResponse"},
+      "documentation": "<p>Returns descriptive information about PaaS service.</p>"
     },
-    "DescribeTemplate": {
-      "name": "DescribeTemplate",
+    "ListBackups": {
+      "name": "ListBackups",
       "http": {
         "method": "GET",
-        "requestUri": "/templates/{name}"
+        "requestUri": "/backups"
       },
-      "input": {"shape": "DescribeTemplateRequest"},
-      "output":{"shape":"DescribeTemplateResponse"},
-      "documentation":"<p>Returns descriptive information about PaaS template.</p>"
+      "input": {"shape": "ListBackupsRequest"},
+      "output": {"shape": "ListBackupsResponse"},
+      "documentation": "<p>Lists backups.</p>"
     },
-    "ListBackups":{
-      "name":"ListBackups",
-      "http":{
-        "method":"GET",
-        "requestUri":"/backups"
+    "ListServices": {
+      "name": "ListServices",
+      "http": {
+        "method": "GET",
+        "requestUri": "/services"
       },
-      "input":{"shape":"ListBackupsRequest"},
-      "output":{"shape":"ListBackupsResponse"},
-      "documentation":"<p>Lists backups.</p>"
+      "input": {"shape": "ListServicesRequest"},
+      "output": {"shape": "ListServicesResponse"},
+      "documentation": "<p>Lists PaaS services.</p>"
     },
-    "ListClusters":{
-      "name":"ListClusters",
-      "http":{
-        "method":"GET",
-        "requestUri":"/clusters"
+    "ModifyService": {
+      "name": "ModifyService",
+      "http": {
+        "method": "POST",
+        "requestUri": "/services/{service_id}"
       },
-      "input":{"shape":"ListClustersRequest"},
-      "output":{"shape":"ListClustersResponse"},
-      "documentation":"<p>Lists PaaS clusters.</p>"
-    },
-    "ListTemplates":{
-      "name":"ListTemplates",
-      "http":{
-        "method":"GET",
-        "requestUri":"/templates"
-      },
-      "input":{"shape":"ListTemplatesRequest"},
-      "output":{"shape":"ListTemplatesResponse"},
-      "documentation":"<p>Lists PaaS templates.</p>"
-    },
-    "ModifyCluster":{
-      "name":"ModifyCluster",
-      "http":{
-        "method":"POST",
-        "requestUri":"/clusters/{name}"
-      },
-      "input":{"shape":"ModifyClusterRequest"},
-      "output":{"shape":"ModifyClusterResponse"},
-      "documentation":"<p>Modifies PaaS cluster.</p>"
+      "input": {"shape": "ModifyServiceRequest"},
+      "output": {"shape": "ModifyServiceResponse"},
+      "documentation": "<p>Modifies PaaS service.</p>"
     }
   },
   "shapes": {
-    "Backup":{
+    "Backup": {
       "type": "structure",
       "members": {
         "id": {"shape": "String"},
-        "cluster_id": {"shape": "String"},
-        "cluster_name": {"shape": "String"},
-        "cluster_class": {"shape": "String"},
-        "cluster_template": {"shape": "String"},
-        "cluster_deleted": {"shape": "Boolean"},
-        "status": {"shape":"String"},
-        "time": {"shape":"Integer"},
+        "service_id": {"shape": "String"},
+        "service_name": {"shape": "String"},
+        "service_class": {"shape": "String"},
+        "service_type": {"shape": "String"},
+        "service_deleted": {"shape": "Boolean"},
+        "status": {"shape": "String"},
+        "time": {"shape": "Integer"},
         "databases": {"shape": "DatabaseBackupList"}
       }
     },
-    "BackupSettings":{
+    "BackupSettings": {
       "type": "structure",
-      "required":[
+      "required": [
         "enabled",
         "start_time",
         "bucket_name",
-        "user_name"
+        "user_login"
       ],
       "members": {
-        "enabled": {"shape":"Boolean"},
+        "enabled": {"shape": "Boolean"},
         "start_time": {"shape": "Integer"},
         "bucket_name": {"shape": "String"},
-        "user_id": {"shape": "String"},
-        "user_name": {"shape": "String"},
         "user_login": {"shape": "String"},
         "notification_email": {"shape": "String"}
       }
     },
-    "Boolean":{"type":"boolean"},
-    "Cluster":{
-      "type": "structure",
-      "members": {
-        "id": {"shape":"String"},
-        "name":{"shape":"String"},
-        "template":{"shape":"String"},
-        "class":{"shape":"String"},
-        "subnets": {"shape": "StringList"},
-        "network_interfaces": {"shape": "StringList"},
-        "security_groups": {"shape": "SecurityGroupList"},
-        "root_volume_type":{"shape":"String"},
-        "root_volume_size":{"shape":"Integer"},
-        "root_volume_iops":{"shape":"Integer"},
-        "data_volume_type":{"shape":"String"},
-        "data_volume_size":{"shape":"Integer"},
-        "data_volume_iops":{"shape":"Integer"},
-        "instance_type":{"shape":"String"},
-        "highly_available":{"shape":"Boolean"},
-        "keypair":{"shape":"String"},
-        "parameters": {"shape": "None"},
-        "users":{"shape": "UserList"},
-        "databases": {"shape": "DatabaseList"},
-        "status": {"shape":"String"},
-        "error_code": {"shape":"String"},
-        "error_description": {"shape":"String"},
-        "endpoints": {"shape":"StringList"},
-        "instances": {"shape":"InstanceList"},
-        "supported_features": {"shape": "StringList"},
-        "backup_settings": {"shape": "BackupSettings"},
-        "total_cpu_count":{"shape":"Integer"},
-        "total_memory":{"shape":"Integer"}
-      }
-    },
-    "CreateClusterRequest": {
+    "Boolean": {"type": "boolean"},
+    "CreateServiceRequest": {
       "type": "structure",
       "required": [
-        "template",
         "name",
-        "class_name",
+        "service_class",
+        "service_type",
         "security_groups",
         "root_volume_type",
         "root_volume_size",
@@ -193,84 +138,86 @@
         "parameters"
       ],
       "members": {
-        "name": {"shape":"String"},
-        "template": {"shape":"String"},
-        "class_name": {"shape":"String"},
+        "name": {"shape": "String"},
+        "service_class": {"shape": "String"},
+        "service_type": {"shape": "String"},
         "subnets": {"shape": "StringList"},
         "network_interfaces": {"shape": "StringList"},
         "security_groups": {"shape": "StringList"},
-        "root_volume_type":{"shape":"String"},
-        "root_volume_size":{"shape":"Integer"},
-        "root_volume_iops":{"shape":"Integer"},
-        "data_volume_type":{"shape":"String"},
-        "data_volume_size":{"shape":"Integer"},
-        "data_volume_iops":{"shape":"Integer"},
-        "instance_type":{"shape":"String"},
-        "highly_available":{"shape":"Boolean"},
-        "instance_qty":{"shape":"Integer"},
-        "keypair":{"shape":"String"},
+        "root_volume_type": {"shape": "String"},
+        "root_volume_size": {"shape": "Integer"},
+        "root_volume_iops": {"shape": "Integer"},
+        "data_volume_type": {"shape": "String"},
+        "data_volume_size": {"shape": "Integer"},
+        "data_volume_iops": {"shape": "Integer"},
+        "instance_type": {"shape": "String"},
+        "highly_available": {"shape": "Boolean"},
+        "instance_qty": {"shape": "Integer"},
+        "keypair": {"shape": "String"},
         "parameters": {"shape": "None"},
-        "users":{"shape": "UserList"},
+        "user_data": {"shape": "String"},
+        "user_data_content_type": {"shape": "String"},
+        "users": {"shape": "UserList"},
         "databases": {"shape": "DatabaseList"},
         "backup_settings": {"shape": "BackupSettings"},
         "arbitrator_required": {"shape": "Boolean"}
       }
     },
-    "CreateClusterResponse":{
-      "type":"structure",
-      "members":{
-        "cluster":{
-          "shape":"Cluster",
-          "documentation":"<p>The full description of your new cluster.</p>"
+    "CreateServiceResponse": {
+      "type": "structure",
+      "members": {
+        "service": {
+          "shape": "Service",
+          "documentation": "<p>The full description of your new service.</p>"
         }
       }
     },
-    "Database":{
+    "Database": {
       "type": "structure",
-      "required":[
+      "required": [
         "name",
         "users"
       ],
       "members": {
-        "name": {"shape":"String"},
+        "name": {"shape": "String"},
         "backup_enabled": {"shape": "Boolean"},
         "parameters": {"shape": "None"},
         "users": {"shape": "UserList"}
       }
     },
-    "DatabaseBackup":{
+    "DatabaseBackup": {
       "type": "structure",
       "members": {
-        "name": {"shape":"String"},
-        "cluster_name": {"shape":"String"},
-        "cluster_id": {"shape":"String"},
-        "backup_id": {"shape":"String"},
-        "size": {"shape":"Integer"},
-        "status": {"shape":"String"},
+        "name": {"shape": "String"},
+        "service_name": {"shape": "String"},
+        "service_id": {"shape": "String"},
+        "backup_id": {"shape": "String"},
+        "size": {"shape": "Integer"},
+        "status": {"shape": "String"},
         "parameters": {"shape": "None"},
-        "logfile": {"shape":"String"},
-        "location": {"shape":"String"}
+        "logfile": {"shape": "String"},
+        "location": {"shape": "String"}
       }
     },
     "DatabaseBackupList": {
       "type": "list",
-      "member":{"shape": "DatabaseBackup"}
+      "member": {"shape": "DatabaseBackup"}
     },
     "DatabaseList": {
       "type": "list",
-      "member":{"shape": "Database"}
+      "member": {"shape": "Database"}
     },
-    "DeleteBackupsRequest":{
-      "type":"structure",
-      "required":[
-        "cluster_id"
+    "DeleteBackupsRequest": {
+      "type": "structure",
+      "required": [
+        "service_id"
       ],
-      "members":{
-        "cluster_id": {
+      "members": {
+        "service_id": {
           "shape": "String",
-          "documentation": "<p>The ID of the cluster.</p>",
-          "location":"uri",
-          "locationName":"cluster_id"
+          "documentation": "<p>The ID of the service.</p>",
+          "location": "uri",
+          "locationName": "service_id"
         },
         "backup_ids": {
           "shape": "StringList",
@@ -278,129 +225,83 @@
         }
       }
     },
-    "DeleteBackupsResponse":{
-      "type":"structure",
+    "DeleteBackupsResponse": {
+      "type": "structure",
       "members": {
 
       }
     },
-    "DeleteClusterRequest":{
-      "type":"structure",
-      "required":[
-        "name",
-        "template",
-        "class_name",
+    "DeleteServiceRequest": {
+      "type": "structure",
+      "required": [
+        "service_id",
         "delete_interfaces"
       ],
-      "members":{
-        "name": {
+      "members": {
+        "service_id": {
           "shape": "String",
-          "documentation": "<p>The name of the cluster to delete.</p>",
-          "location":"uri",
-          "locationName":"name"
-        },
-        "template": {
-          "shape": "String",
-          "documentation": "<p>The template name of the cluster to delete.</p>"
-        },
-        "class_name": {
-          "shape": "String",
-          "documentation": "<p>The class name of the cluster to delete.</p>"
+          "documentation": "<p>The ID of the service to delete.</p>",
+          "location": "uri",
+          "locationName": "name"
         },
         "delete_interfaces": {
           "shape": "Boolean",
-          "documentation": "<p>Delete interfaces with cluster.</p>"
+          "documentation": "<p>Delete interfaces with service.</p>"
         }
       }
     },
-    "DeleteClusterResponse":{
-      "type":"structure",
-      "members":{
-        "cluster":{
-          "shape":"Cluster",
-          "documentation":"<p>The full description of the cluster to delete.</p>"
+    "DeleteServiceResponse": {
+      "type": "structure",
+      "members": {
+        "service": {
+          "shape": "Service",
+          "documentation": "<p>The full description of the service to delete.</p>"
         }
       }
     },
     "DescribeBackupRequest": {
       "type": "structure",
       "required": [
-        "backup_id",
-        "apply_mappings"
+        "backup_id"
       ],
       "members": {
         "backup_id": {
           "shape": "String",
-          "documentation": "<p>The ID of the cluster to describe.</p>",
-          "location":"uri",
-          "locationName":"backup_id"
-        },
-        "apply_mappings": {
-          "shape": "Boolean",
-          "documentation": "<p>Map backup database parameters according to template mappings.</p>"
+          "documentation": "<p>The ID of the service to describe.</p>",
+          "location": "uri",
+          "locationName": "backup_id"
         }
       }
     },
-    "DescribeBackupResponse":{
-      "type":"structure",
-      "members":{
-        "backup":{
-          "shape":"Backup",
-          "documentation":"<p>The full description of your specified backup.</p>"
+    "DescribeBackupResponse": {
+      "type": "structure",
+      "members": {
+        "backup": {
+          "shape": "Backup",
+          "documentation": "<p>The full description of your specified backup.</p>"
         }
       }
     },
-    "DescribeClusterRequest": {
+    "DescribeServiceRequest": {
       "type": "structure",
       "required": [
-        "name",
-        "template",
-        "class_name"
+        "service_id"
       ],
       "members": {
-        "name": {
+        "service_id": {
           "shape": "String",
-          "documentation": "<p>The name of the cluster to describe.</p>",
-          "location":"uri",
-          "locationName":"name"
-        },
-        "template": {
-          "shape": "String",
-          "documentation": "<p>The template name of the cluster to describe.</p>"
-        },
-        "class_name": {
-          "shape": "String",
-          "documentation": "<p>The class name of the cluster to describe.</p>"
+          "documentation": "<p>The ID of the service to describe.</p>",
+          "location": "uri",
+          "locationName": "name"
         }
       }
     },
-    "DescribeClusterResponse":{
-      "type":"structure",
-      "members":{
-        "cluster":{
-          "shape":"Cluster",
-          "documentation":"<p>The full description of your specified cluster.</p>"
-        }
-      }
-    },
-    "DescribeTemplateRequest": {
+    "DescribeServiceResponse": {
       "type": "structure",
-      "required": ["name"],
       "members": {
-        "name": {
-          "shape": "String",
-          "documentation": "<p>The name of the template to describe.</p>",
-          "location":"uri",
-          "locationName":"name"
-        }
-      }
-    },
-    "DescribeTemplateResponse":{
-      "type":"structure",
-      "members":{
-        "template":{
-          "shape":"None",
-          "documentation":"<p>The full description of your specified template.</p>"
+        "service": {
+          "shape": "Service",
+          "documentation": "<p>The full description of your specified service.</p>"
         }
       }
     },
@@ -419,140 +320,145 @@
     },
     "InstanceList": {
       "type": "list",
-      "member":{"shape": "Instance"}
+      "member": {"shape": "Instance"}
     },
-    "Integer":{"type":"integer"},
+    "Integer": {"type": "integer"},
     "ListBackupsRequest": {
-      "type":"structure",
-      "required": ["apply_mappings"],
+      "type": "structure",
       "members": {
-         "class_name": {
+         "service_class": {
           "shape": "String",
-          "documentation": "<p>The cluster class name filter.</p>"
+          "documentation": "<p>The service class filter.</p>"
         },
-        "template":{
+        "service_type": {
           "shape": "String",
-          "documentation":"<p>The cluster template name filter.</p>"
+          "documentation": "<p>The service type filter.</p>"
         },
-        "cluster_id": {
+        "service_id": {
           "shape": "String",
-          "documentation": "<p>The cluster ID filter.</p>"
-        },
-        "apply_mappings": {
-          "shape": "Boolean",
-          "documentation": "<p>Map backup database parameters according to template mappings.</p>"
+          "documentation": "<p>The service ID filter.</p>"
         }
       }
     },
     "ListBackupsResponse": {
-      "type":"structure",
-      "members":{
-        "backups":{
-          "shape":"StringList",
-          "documentation":"<p>A list of all backups for your account in the specified Region.</p>"
-        }
-      }
-   },
-    "ListClustersRequest": {
-      "type":"structure",
+      "type": "structure",
       "members": {
-        "template":{
-          "shape": "String",
-          "documentation":"<p>The cluster template name filter.</p>"
-        },
-        "class_name": {
-          "shape": "String",
-          "documentation": "<p>The cluster class name filter.</p>"
-        }
-      }
-    },
-    "ListClustersResponse": {
-      "type":"structure",
-      "members":{
-        "clusters":{
-          "shape":"StringList",
-          "documentation":"<p>A list of all of the clusters for your account in the specified Region.</p>"
+        "backups": {
+          "shape": "StringList",
+          "documentation": "<p>A list of all backups for your account in the specified Region.</p>"
         }
       }
    },
-    "ListTemplatesRequest": {
-      "type":"structure",
-      "members":{
-        "class_name": {
+    "ListServicesRequest": {
+      "type": "structure",
+      "members": {
+        "service_class": {
           "shape": "String",
-          "documentation":"<p>The template class name filter.</p>"
+          "documentation": "<p>The service class filter.</p>"
+        },
+        "service_type": {
+          "shape": "String",
+          "documentation": "<p>The service type filter.</p>"
         }
       }
     },
-    "ListTemplatesResponse":{
-      "type":"structure",
-      "members":{
-        "templates":{
-          "shape":"StringList",
-          "documentation":"<p>A list of all of the templates for your account in the specified Region.</p>"
+    "ListServicesResponse": {
+      "type": "structure",
+      "members": {
+        "services": {
+          "shape": "StringList",
+          "documentation": "<p>A list of all of the services for your account in the specified Region.</p>"
         }
       }
-    },
-    "ModifyClusterRequest": {
+   },
+    "ModifyServiceRequest": {
       "type": "structure",
       "required": [
-        "class_name",
-        "template",
-        "name"
+        "service_id"
       ],
       "members": {
-        "class_name":{"shape":"String"},
-        "template":{"shape":"String"},
-        "name":{
-          "shape":"String",
-          "location":"uri",
-          "locationName":"name"
+        "service_id": {
+          "shape": "String",
+          "documentation": "<p>The service ID to modify.</p>"
         },
-        "users":{"shape": "UserList"},
+        "users": {"shape": "UserList"},
         "databases": {"shape": "DatabaseList"},
         "backup_settings": {"shape": "BackupSettings"}
       }
     },
-    "ModifyClusterResponse": {
+    "ModifyServiceResponse": {
       "type": "structure",
       "members": {
-        "cluster": {
-          "shape": "Cluster",
-          "documentation":"<p>The full description of your modified cluster.</p>"
+        "service": {
+          "shape": "Service",
+          "documentation": "<p>The full description of your modified service.</p>"
         }
       }
     },
     "None": {"type": "none"},
     "SecurityGroup": {
       "type": "structure",
-      "members":{
-        "_id":{"shape": "String"},
-        "created_automatically":{"shape": "Boolean"}
+      "members": {
+        "_id": {"shape": "String"},
+        "created_automatically": {"shape": "Boolean"}
       }
     },
     "SecurityGroupList": {
-      "type":"list",
-      "member":{"shape":"SecurityGroup"}
+      "type": "list",
+      "member": {"shape": "SecurityGroup"}
     },
-    "String":{"type":"string"},
-    "StringList":{
-      "type":"list",
-      "member":{"shape":"String"}
-    },
-    "Timestamp":{"type":"timestamp"},
-    "User":{
-      "type":"structure",
-      "required":[
-        "name"
-      ],
-      "members":{
-        "name":{"shape": "String"},
-        "parameters":{"shape": "None"}
+    "Service": {
+      "type": "structure",
+      "members": {
+        "id": {"shape": "String"},
+        "name": {"shape": "String"},
+        "service_class": {"shape": "String"},
+        "service_type": {"shape": "String"},
+        "subnets": {"shape": "StringList"},
+        "network_interfaces": {"shape": "StringList"},
+        "security_groups": {"shape": "SecurityGroupList"},
+        "root_volume_type": {"shape": "String"},
+        "root_volume_size": {"shape": "Integer"},
+        "root_volume_iops": {"shape": "Integer"},
+        "data_volume_type": {"shape": "String"},
+        "data_volume_size": {"shape": "Integer"},
+        "data_volume_iops": {"shape": "Integer"},
+        "instance_type": {"shape": "String"},
+        "highly_available": {"shape": "Boolean"},
+        "keypair": {"shape": "String"},
+        "parameters": {"shape": "None"},
+        "users": {"shape": "UserList"},
+        "databases": {"shape": "DatabaseList"},
+        "status": {"shape": "String"},
+        "error_code": {"shape": "String"},
+        "error_description": {"shape": "String"},
+        "endpoints": {"shape": "StringList"},
+        "instances": {"shape": "InstanceList"},
+        "supported_features": {"shape": "StringList"},
+        "backup_settings": {"shape": "BackupSettings"},
+        "total_cpu_count": {"shape": "Integer"},
+        "total_memory": {"shape": "Integer"}
       }
     },
-    "UserList":{
-      "type":"list",
-      "member":{"shape": "User"}
+    "String": {"type": "string"},
+    "StringList": {
+      "type": "list",
+      "member": {"shape": "String"}
+    },
+    "Timestamp": {"type": "timestamp"},
+    "User": {
+      "type": "structure",
+      "required": [
+        "name"
+      ],
+      "members": {
+        "name": {"shape": "String"},
+        "parameters": {"shape": "None"}
+      }
+    },
+    "UserList": {
+      "type": "list",
+      "member": {"shape": "User"}
     }
   }
 }
