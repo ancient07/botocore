@@ -157,8 +157,6 @@
         "parameters": {"shape": "None"},
         "user_data": {"shape": "String"},
         "user_data_content_type": {"shape": "String"},
-        "users": {"shape": "UserList"},
-        "databases": {"shape": "DatabaseList"},
         "backup_settings": {"shape": "BackupSettings"},
         "arbitrator_required": {"shape": "Boolean"}
       }
