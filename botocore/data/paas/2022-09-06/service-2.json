@@ -14,7 +14,7 @@
     "CreateService": {
       "name": "CreateService",
       "http": {
-        "method": "PUT",
+        "method": "POST",
         "requestUri": "/services"
       },
       "input": {"shape": "CreateServiceRequest"},
@@ -25,7 +25,7 @@
       "name": "DeleteBackups",
       "http": {
         "method": "DELETE",
-        "requestUri": "services/{service_id}/backups"
+        "requestUri": "/services/{service_id}/backups"
       },
       "input": {"shape": "DeleteBackupsRequest"},
       "output": {"shape": "DeleteBackupsResponse"},
@@ -84,7 +84,7 @@
     "ModifyService": {
       "name": "ModifyService",
       "http": {
-        "method": "POST",
+        "method": "PUT",
         "requestUri": "/services/{service_id}"
       },
       "input": {"shape": "ModifyServiceRequest"},
@@ -130,20 +130,20 @@
         "name",
         "service_class",
         "service_type",
-        "security_groups",
+        "security_group_ids",
         "root_volume_type",
         "root_volume_size",
         "instance_type",
-        "highly_available",
+        "high_availability",
         "parameters"
       ],
       "members": {
         "name": {"shape": "String"},
         "service_class": {"shape": "String"},
         "service_type": {"shape": "String"},
-        "subnets": {"shape": "StringList"},
-        "network_interfaces": {"shape": "StringList"},
-        "security_groups": {"shape": "StringList"},
+        "subnet_ids": {"shape": "StringList"},
+        "network_interface_ids": {"shape": "StringList"},
+        "security_group_ids": {"shape": "StringList"},
         "root_volume_type": {"shape": "String"},
         "root_volume_size": {"shape": "Integer"},
         "root_volume_iops": {"shape": "Integer"},
@@ -151,9 +151,9 @@
         "data_volume_size": {"shape": "Integer"},
         "data_volume_iops": {"shape": "Integer"},
         "instance_type": {"shape": "String"},
-        "highly_available": {"shape": "Boolean"},
+        "high_availability": {"shape": "Boolean"},
         "instance_qty": {"shape": "Integer"},
-        "keypair": {"shape": "String"},
+        "ssh_key_name": {"shape": "String"},
         "parameters": {"shape": "None"},
         "user_data": {"shape": "String"},
         "user_data_content_type": {"shape": "String"},
@@ -240,7 +240,7 @@
           "shape": "String",
           "documentation": "<p>The ID of the service to delete.</p>",
           "location": "uri",
-          "locationName": "name"
+          "locationName": "service_id"
         },
         "delete_interfaces": {
           "shape": "Boolean",
@@ -290,7 +290,7 @@
           "shape": "String",
           "documentation": "<p>The ID of the service to describe.</p>",
           "location": "uri",
-          "locationName": "name"
+          "locationName": "service_id"
         }
       }
     },
@@ -377,7 +377,9 @@
       "members": {
         "service_id": {
           "shape": "String",
-          "documentation": "<p>The service ID to modify.</p>"
+          "documentation": "<p>The service ID to modify.</p>",
+          "location": "uri",
+          "locationName": "service_id"
         },
         "users": {"shape": "UserList"},
         "databases": {"shape": "DatabaseList"},
@@ -412,8 +414,8 @@
         "name": {"shape": "String"},
         "service_class": {"shape": "String"},
         "service_type": {"shape": "String"},
-        "subnets": {"shape": "StringList"},
-        "network_interfaces": {"shape": "StringList"},
+        "subnet_ids": {"shape": "StringList"},
+        "network_interface_ids": {"shape": "StringList"},
         "security_groups": {"shape": "SecurityGroupList"},
         "root_volume_type": {"shape": "String"},
         "root_volume_size": {"shape": "Integer"},
@@ -422,8 +424,8 @@
         "data_volume_size": {"shape": "Integer"},
         "data_volume_iops": {"shape": "Integer"},
         "instance_type": {"shape": "String"},
-        "highly_available": {"shape": "Boolean"},
-        "keypair": {"shape": "String"},
+        "high_availability": {"shape": "Boolean"},
+        "ssh_key_name": {"shape": "String"},
         "parameters": {"shape": "None"},
         "users": {"shape": "UserList"},
         "databases": {"shape": "DatabaseList"},
