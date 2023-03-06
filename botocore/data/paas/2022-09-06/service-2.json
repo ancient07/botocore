@@ -71,6 +71,15 @@
       "output": {"shape": "ListBackupsResponse"},
       "documentation": "<p>Lists backups.</p>"
     },
+    "ListBackupUsers": {
+      "name": "ListBackupUsers",
+      "http": {
+        "method": "GET",
+        "requestUri": "/backup-users"
+      },
+      "output": {"shape": "ListBackupUsersResponse"},
+      "documentation": "<p>Get users suitable for cluster backup.</p>"
+    },
     "ListServices": {
       "name": "ListServices",
       "http": {
@@ -121,6 +130,21 @@
         "bucketName": {"shape": "String"},
         "userLogin": {"shape": "String"},
         "notificationEmail": {"shape": "String"}
+      }
+    },
+    "BackupUser": {
+      "type": "structure",
+      "members": {
+        "id": {"shape": "String"},
+        "login": {"shape": "String"},
+        "name": {"shape": "String"},
+        "email": {"shape": "String"},
+        "enabled": {"shape": "Boolean"},
+        "lastLoginTime": {"shape": "Integer"},
+        "modifyTime": {"shape": "Integer"},
+        "ignoredEventTypes": {"shape": "IgnoredEventTypeList"},
+        "projectGrants": {"shape": "ProjectGrantList"},
+        "adProvider": {"shape": "String"}
       }
     },
     "Boolean": {"type": "boolean"},
@@ -303,6 +327,17 @@
         }
       }
     },
+    "IgnoredEventType": {
+      "type": "structure",
+      "members": {
+        "createTime": "Integer",
+        "type": "String"
+      }
+    },
+    "IgnoredEventTypeList": {
+      "type": "list",
+      "member": {"shape": "IgnoredEventType"}
+    },
     "Instance": {
       "type": "structure",
       "members": {
@@ -346,6 +381,10 @@
           "documentation": "<p>A list of all backups for your account in the specified Region.</p>"
         }
       }
+    },
+    "ListBackupUsersResponse": {
+      "type": "list",
+      "member": {"shape": "BackupUser"}
     },
     "ListServicesRequest": {
       "type": "structure",
@@ -396,6 +435,18 @@
       }
     },
     "None": {"type": "none"},
+    "ProjectGrant": {
+      "type": "structure",
+      "members": {
+        "action": {"shape": "String"},
+        "projId": {"shape": "String"},
+        "projLogin": {"shape": "String"}
+      }
+    },
+    "ProjectGrantList": {
+      "type": "list",
+      "member": {"shape": "ProjectGrant"}
+    },
     "SecurityGroup": {
       "type": "structure",
       "members": {
