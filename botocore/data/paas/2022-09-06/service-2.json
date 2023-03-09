@@ -77,8 +77,9 @@
         "method": "GET",
         "requestUri": "/backup-users"
       },
+      "input": {"shape": "ListBackupUsersRequest"},
       "output": {"shape": "ListBackupUsersResponse"},
-      "documentation": "<p>Get users suitable for cluster backup.</p>"
+      "documentation": "<p>Returns users list, available for service backup.</p>"
     },
     "ListServices": {
       "name": "ListServices",
@@ -88,7 +89,7 @@
       },
       "input": {"shape": "ListServicesRequest"},
       "output": {"shape": "ListServicesResponse"},
-      "documentation": "<p>Lists PaaS services.</p>"
+      "documentation": "<p>Returns list of PaaS services.</p>"
     },
     "ModifyService": {
       "name": "ModifyService",
@@ -98,7 +99,7 @@
       },
       "input": {"shape": "ModifyServiceRequest"},
       "output": {"shape": "ModifyServiceResponse"},
-      "documentation": "<p>Modifies PaaS service.</p>"
+      "documentation": "<p>Modifies the PaaS service.</p>"
     }
   },
   "shapes": {
@@ -129,7 +130,8 @@
         "startTime": {"shape": "Integer"},
         "bucketName": {"shape": "String"},
         "userLogin": {"shape": "String"},
-        "notificationEmail": {"shape": "String"}
+        "notificationEmail": {"shape": "String"},
+        "userId": {"shape": "String"}
       }
     },
     "BackupUser": {
@@ -190,7 +192,7 @@
       "members": {
         "service": {
           "shape": "Service",
-          "documentation": "<p>The full description of your new service.</p>"
+          "documentation": "<p>The full description of the new service.</p>"
         }
       }
     },
@@ -300,7 +302,7 @@
       "members": {
         "backup": {
           "shape": "Backup",
-          "documentation": "<p>The full description of your specified backup.</p>"
+          "documentation": "<p>The full description of the specified backup.</p>"
         }
       }
     },
@@ -323,7 +325,7 @@
       "members": {
         "service": {
           "shape": "Service",
-          "documentation": "<p>The full description of your specified service.</p>"
+          "documentation": "<p>The full description of the specified service.</p>"
         }
       }
     },
@@ -373,18 +375,56 @@
         }
       }
     },
+    "ListBackups": {
+      "type": "list",
+      "member": {"shape": "Backup"}
+    },
     "ListBackupsResponse": {
       "type": "structure",
       "members": {
         "backups": {
-          "shape": "StringList",
-          "documentation": "<p>A list of all backups for your account in the specified Region.</p>"
+          "shape": "ListBackups",
+          "documentation": "<p>A list of all backups for the account in the specified Region.</p>"
         }
       }
     },
-    "ListBackupUsersResponse": {
+    "ListBackupUsers": {
       "type": "list",
       "member": {"shape": "BackupUser"}
+    },
+    "ListBackupUsersRequest": {
+      "type": "structure",
+      "members": {
+
+      }
+    },
+    "ListBackupUsersResponse": {
+      "type": "structure",
+      "members": {
+        "users": {
+          "shape": "ListBackupUsers",
+          "documentation": "<p>A list of users, available for service backup.</p>"
+        }
+      }
+    },
+    "ListServiceItem": {
+      "type": "structure",
+      "members": {
+        "id": {"shape": "String"},
+        "name": {"shape": "String"},
+        "status": {"shape": "String"},
+        "serviceType": {"shape": "String"},
+        "serviceClass": {"shape": "String"},
+        "serviceTypeCaption": {"shape": "String"},
+        "version": {"shape": "String"},
+        "errorCode": {"shape": "String"},
+        "totalCpuCount": {"shape": "Integer"},
+        "totalMemory": {"shape": "Integer"}
+      }
+    },
+    "ListServices": {
+      "type": "list",
+      "member": {"shape": "ListServiceItem"}
     },
     "ListServicesRequest": {
       "type": "structure",
@@ -403,8 +443,8 @@
       "type": "structure",
       "members": {
         "services": {
-          "shape": "StringList",
-          "documentation": "<p>A list of all of the services for your account in the specified Region.</p>"
+          "shape": "ListServices",
+          "documentation": "<p>A list of all of the services for the account in the specified Region.</p>"
         }
       }
    },
