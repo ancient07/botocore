@@ -742,6 +742,10 @@
           "shape":"String",
           "documentation":"<p>The desired Kubernetes version for your cluster. If you don't specify a value here, the default version available in Amazon EKS is used.</p> <note> <p>The default version might not be the latest version available.</p> </note>"
         },
+        "roleArn":{
+          "shape":"String",
+          "documentation":"<p>A valid Amazon Resource Name (ARN) that identifies an IAM role."
+        },
         "remoteAccessConfig":{
           "shape":"RemoteAccessConfig",
           "documentation":"<p>An object representing the remote access configuration for the Kubernetes cluster.</p>",
