@@ -130,8 +130,7 @@
         "startTime": {"shape": "Integer"},
         "bucketName": {"shape": "String"},
         "userLogin": {"shape": "String"},
-        "notificationEmail": {"shape": "String"},
-        "userId": {"shape": "String"}
+        "notificationEmail": {"shape": "String"}
       }
     },
     "BackupUser": {
