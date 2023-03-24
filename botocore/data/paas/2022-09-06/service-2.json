@@ -176,7 +176,6 @@
         "dataVolumeSize": {"shape": "Integer"},
         "dataVolumeIops": {"shape": "Integer"},
         "instanceType": {"shape": "String"},
-        "instanceQty": {"shape": "Integer"},
         "highAvailability": {"shape": "Boolean"},
         "sshKeyName": {"shape": "String"},
         "parameters": {"shape": "None"},
