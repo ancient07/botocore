@@ -249,9 +249,7 @@
     },
     "DeleteBackupsResponse": {
       "type": "structure",
-      "members": {
-
-      }
+      "members": {}
     },
     "DeleteServiceRequest": {
       "type": "structure",
@@ -274,12 +272,7 @@
     },
     "DeleteServiceResponse": {
       "type": "structure",
-      "members": {
-        "service": {
-          "shape": "Service",
-          "documentation": "<p>The full description of the service to delete.</p>"
-        }
-      }
+      "members": {}
     },
     "DescribeBackupRequest": {
       "type": "structure",
