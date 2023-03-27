@@ -194,8 +194,7 @@
     "Database": {
       "type": "structure",
       "required": [
-        "name",
-        "users"
+        "name"
       ],
       "members": {
         "name": {"shape": "String"},
