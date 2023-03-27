@@ -120,10 +120,7 @@
     "BackupSettings": {
       "type": "structure",
       "required": [
-        "enabled",
-        "startTime",
-        "bucketName",
-        "userLogin"
+        "enabled"
       ],
       "members": {
         "enabled": {"shape": "Boolean"},
