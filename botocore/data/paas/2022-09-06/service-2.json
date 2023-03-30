@@ -117,7 +117,7 @@
         "databases": {"shape": "DatabaseBackupList"}
       }
     },
-    "BackupSettings": {
+    "BackupSettingsRequest": {
       "type": "structure",
       "required": [
         "enabled"
@@ -126,6 +126,17 @@
         "enabled": {"shape": "Boolean"},
         "startTime": {"shape": "Integer"},
         "bucketName": {"shape": "String"},
+        "userLogin": {"shape": "String"},
+        "notificationEmail": {"shape": "String"}
+      }
+    },
+    "BackupSettingsResponse": {
+      "type": "structure",
+      "members": {
+        "enabled": {"shape": "Boolean"},
+        "startTime": {"shape": "Integer"},
+        "bucketName": {"shape": "String"},
+        "userId": {"shape": "String"},
         "userLogin": {"shape": "String"},
         "notificationEmail": {"shape": "String"}
       }
@@ -178,7 +189,7 @@
         "parameters": {"shape": "None"},
         "userData": {"shape": "String"},
         "userDataContentType": {"shape": "String"},
-        "backupSettings": {"shape": "BackupSettings"},
+        "backupSettings": {"shape": "BackupSettingsRequest"},
         "arbitratorRequired": {"shape": "Boolean"}
       }
     },
@@ -449,7 +460,7 @@
         },
         "users": {"shape": "UserList"},
         "databases": {"shape": "DatabaseList"},
-        "backupSettings": {"shape": "BackupSettings"}
+        "backupSettings": {"shape": "BackupSettingsRequest"}
       }
     },
     "ModifyServiceResponse": {
@@ -513,7 +524,7 @@
         "endpoints": {"shape": "StringList"},
         "instances": {"shape": "InstanceList"},
         "supportedFeatures": {"shape": "StringList"},
-        "backupSettings": {"shape": "BackupSettings"},
+        "backupSettings": {"shape": "BackupSettingsResponse"},
         "totalCpuCount": {"shape": "Integer"},
         "totalMemory": {"shape": "Integer"}
       }
