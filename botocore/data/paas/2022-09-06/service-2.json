@@ -151,9 +151,7 @@
         "enabled": {"shape": "Boolean"},
         "lastLoginTime": {"shape": "Integer"},
         "modifyTime": {"shape": "Integer"},
-        "ignoredEventTypes": {"shape": "IgnoredEventTypeList"},
-        "projectGrants": {"shape": "ProjectGrantList"},
-        "adProvider": {"shape": "String"}
+        "projectGrants": {"shape": "StringList"}
       }
     },
     "Boolean": {"type": "boolean"},
@@ -327,17 +325,6 @@
         }
       }
     },
-    "IgnoredEventType": {
-      "type": "structure",
-      "members": {
-        "createTime": "Integer",
-        "type": "String"
-      }
-    },
-    "IgnoredEventTypeList": {
-      "type": "list",
-      "member": {"shape": "IgnoredEventType"}
-    },
     "Instance": {
       "type": "structure",
       "members": {
@@ -473,18 +460,6 @@
       }
     },
     "None": {"type": "none"},
-    "ProjectGrant": {
-      "type": "structure",
-      "members": {
-        "action": {"shape": "String"},
-        "projId": {"shape": "String"},
-        "projLogin": {"shape": "String"}
-      }
-    },
-    "ProjectGrantList": {
-      "type": "list",
-      "member": {"shape": "ProjectGrant"}
-    },
     "SecurityGroup": {
       "type": "structure",
       "members": {
