@@ -124,7 +124,8 @@
         "serviceDeleted": {"shape": "Boolean"},
         "status": {"shape": "String"},
         "time": {"shape": "Integer"},
-        "databases": {"shape": "DatabaseBackupList"}
+        "databases": {"shape": "DatabaseBackupList"},
+        "protected": {"shape": "Boolean"}
       }
     },
     "BackupSettingsRequest": {
