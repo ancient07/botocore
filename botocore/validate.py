@@ -259,6 +259,10 @@ class ParamValidator(object):
     def _validate_long(self, param, shape, errors, name):
         range_check(name, param, shape, 'invalid range', errors)
 
+    @type_check(valid_types=(dict,))
+    def _validate_none(self, param, shape, errors, name):
+        pass
+
     def _validate_timestamp(self, param, shape, errors, name):
         # We don't use @type_check because datetimes are a bit
         # more flexible.  You can either provide a datetime
@@ -284,7 +288,7 @@ class ParamValidationDecorator(object):
         self._param_validator = param_validator
         self._serializer = serializer
 
-    def serialize_to_request(self, parameters, operation_model):
+    def serialize_to_request(self, parameters, operation_model, context=None):
         input_shape = operation_model.input_shape
         if input_shape is not None:
             report = self._param_validator.validate(parameters,
@@ -292,4 +296,5 @@ class ParamValidationDecorator(object):
             if report.has_errors():
                 raise ParamValidationError(report=report.generate_report())
         return self._serializer.serialize_to_request(parameters,
-                                                     operation_model)
+                                                     operation_model,
+                                                     context)
