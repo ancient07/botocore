@@ -390,7 +390,6 @@
       "required":[
         "name",
         "resourcesVpcConfig",
-        "legacyClusterParams",
         "version"
       ],
       "members":{
