@@ -460,6 +460,7 @@
     "BalancerTarget": {
       "type": "structure",
       "members": {
+        "serviceCaption": {"shape": "String"},
         "serviceType": {"shape": "String"},
         "protocol": {"shape": "String"},
         "port": {"shape": "String"}
@@ -970,6 +971,7 @@
       "type": "structure",
       "members": {
         "balancerId": {"shape": "String"},
+        "dnsName": {"shape": "String"},
         "balancerName": {"shape": "String"},
         "targetGroupIds": {"shape": "StringList"},
         "listenerIds": {"shape": "StringList"}
