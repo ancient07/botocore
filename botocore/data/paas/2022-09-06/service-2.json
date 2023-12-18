@@ -231,6 +231,26 @@
       "output": {"shape": "ModifyDatabaseResponse"},
       "documentation": "<p>Modifies database.</p>"
     },
+    "ModifyLoadBalancers": {
+      "name": "ModifyLoadBalancers",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/services/{serviceId}/load-balancers"
+      },
+      "input": {"shape": "ModifyLoadBalancersRequest"},
+      "output": {"shape": "ModifyLoadBalancersResponse"},
+      "documentation": "<p>Modifies PaaS load balancers.</p>"
+    },
+    "ModifyServiceEnvironment": {
+      "name": "ModifyServiceEnvironment",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/services/{serviceId}/environment"
+      },
+      "input": {"shape": "ModifyEnvironmentRequest"},
+      "output": {"shape": "ModifyEnvironmentResponse"},
+      "documentation": "<p>Modifies the PaaS service environment.</p>"
+    },
     "ModifyService": {
       "name": "ModifyService",
       "http": {
@@ -447,6 +467,21 @@
         "projectGrants": {"shape": "StringList"}
       }
     },
+    "BalancerTarget": {
+      "type": "structure",
+      "members": {
+        "serviceCaption": {"shape": "String"},
+        "serviceType": {"shape": "String"},
+        "protocol": {"shape": "String"},
+        "port": {"shape": "String"}
+      }
+    },
+    "BalancerTargets": {
+      "type": "list",
+      "member": {
+        "shape": "BalancerTarget"
+      }
+    },
     "Boolean": {"type": "boolean"},
     "CreateDatabaseRequest": {
       "type": "structure",
@@ -502,7 +537,9 @@
         "userData": {"shape": "String"},
         "userDataContentType": {"shape": "String"},
         "backupSettings": {"shape": "BackupSettingsRequest"},
-        "arbitratorRequired": {"shape": "Boolean"}
+        "arbitratorRequired": {"shape": "Boolean"},
+        "internalBalancerRequired": {"shape": "Boolean"},
+        "externalBalancerRequired": {"shape": "Boolean"}
       }
     },
     "CreateServiceResponse": {
@@ -892,7 +929,8 @@
         "errorCode": {"shape": "String"},
         "totalCpuCount": {"shape": "Integer"},
         "totalMemory": {"shape": "Integer"},
-        "vpcId": {"shape": "String"}
+        "vpcId": {"shape": "String"},
+        "environmentVersion": {"shape":  "String"}
       }
     },
     "ListServices": {
@@ -938,6 +976,27 @@
       "type": "structure",
       "members": {
         "users": {"shape": "UserCompactResponseList"}
+      }
+    },
+    "LoadBalancer": {
+      "type": "structure",
+      "members": {
+        "balancerId": {"shape": "String"},
+        "dnsName": {"shape": "String"},
+        "balancerName": {"shape": "String"},
+        "targetGroupIds": {"shape": "StringList"},
+        "listenerIds": {"shape": "StringList"}
+      }
+    },
+    "LoadBalancerList": {
+      "type": "list",
+      "member": {"shape": "LoadBalancer"}
+    },
+    "LoadBalancers": {
+      "type": "structure",
+      "members": {
+        "internalBalancers": {"shape": "LoadBalancerList"},
+        "externalBalancers": {"shape": "LoadBalancerList"}
       }
     },
     "ModifyBackupRequest": {
@@ -992,6 +1051,31 @@
       "type": "structure",
       "members": {
         "database": {"shape": "DatabaseResponse"}
+      }
+    },
+    "ModifyEnvironmentRequest": {
+      "type": "structure",
+      "required": [
+        "serviceId"
+      ],
+      "members": {
+        "serviceId": {
+          "shape": "String",
+          "location": "uri",
+          "locationName": "serviceId"
+        },
+        "environmentVersion": {
+          "shape": "String"
+        }
+      }
+    },
+    "ModifyEnvironmentResponse": {
+      "type": "structure",
+      "members": {
+        "service": {
+          "shape": "Service",
+          "documentation": "<p>The full description of your modified service.</p>"
+        }
       }
     },
     "ModifyServiceRequest": {
@@ -1097,6 +1181,29 @@
         "user": {"shape": "UserResponse"}
       }
     },
+    "ModifyLoadBalancersRequest": {
+      "type": "structure",
+      "required": [
+        "serviceId"
+      ],
+      "members": {
+        "serviceId": {
+          "shape": "String",
+          "documentation": "<p>ID of the service to modify.</p>",
+          "location": "uri",
+          "locationName": "serviceId"
+        },
+        "internalBalancerRequired": {"shape": "Boolean"},
+        "externalBalancerRequired": {"shape": "Boolean"}
+      }
+    },
+    "ModifyLoadBalancersResponse": {
+      "type": "structure",
+      "members": {
+        "internalBalancerRequired": {"shape": "Boolean"},
+        "externalBalancerRequired": {"shape": "Boolean"}
+      }
+    },
     "None": {"type": "none"},
     "SecurityGroup": {
       "type": "structure",
@@ -1141,7 +1248,16 @@
         "backupSettings": {"shape": "BackupSettingsResponse"},
         "totalCpuCount": {"shape": "Integer"},
         "totalMemory": {"shape": "Integer"},
-        "vpcId": {"shape": "String"}
+        "vpcId": {"shape": "String"},
+        "internalBalancerRequired": {"shape": "Boolean"},
+        "externalBalancerRequired": {"shape": "Boolean"},
+        "internalBalancerAllowed": {"shape": "Boolean"},
+        "externalBalancerAllowed": {"shape": "Boolean"},
+        "internalBalancerTargets": {"shape":  "BalancerTargets"},
+        "externalBalancerTargets": {"shape":  "BalancerTargets"},
+        "loadBalancers": {"shape": "LoadBalancers"},
+        "environmentVersion": {"shape":  "String"},
+        "availableEnvironmentVersions": {"shape":  "StringList"}
       }
     },
     "String": {"type": "string"},
