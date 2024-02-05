@@ -211,6 +211,16 @@
       "output": {"shape": "ListDatabasesResponse"},
       "documentation": "<p>Returns databases list.</p>"
     },
+    "ListElasticsearchServicesSuitableForRecovery": {
+      "name": "ListElasticsearchServicesSuitableForRecovery",
+      "http": {
+        "method": "GET",
+        "requestUri": "/services/{serviceId}/elasticsearch-services-suitable-for-recovery"
+      },
+      "input": {"shape": "ListElasticsearchServicesSuitableForRecoveryRequest"},
+      "output": {"shape": "ListElasticsearchServicesSuitableForRecoveryResponse"},
+      "documentation": "<p>Returns elasticsearch services suitable for target service recovery.</p>"
+    },
     "ListElasticsearchSnapshotRepositories": {
       "name": "ListElasticsearchSnapshotRepositories",
       "http": {
@@ -1068,6 +1078,19 @@
         "databases": {"shape": "DatabaseCompactResponseList"}
       }
     },
+    "ListElasticsearchServicesSuitableForRecoveryRequest": {
+      "type": "structure",
+      "required": [
+        "serviceId"
+      ],
+      "members": {
+        "serviceId": {
+          "shape": "String",
+          "location": "uri",
+          "locationName": "serviceId"
+        }
+      }
+    },
     "ListElasticsearchSnapshotRepositoriesRequest": {
       "type": "structure",
       "required": [
@@ -1079,6 +1102,12 @@
           "location": "uri",
           "locationName": "serviceId"
         }
+      }
+    },
+    "ListElasticsearchServicesSuitableForRecoveryResponse": {
+      "type": "structure",
+      "members": {
+        "services": {"shape": "ListServices"}
       }
     },
     "ListElasticsearchSnapshotRepositoriesResponse": {
