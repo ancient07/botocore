@@ -78,7 +78,7 @@ class Serializer(object):
     MAP_TYPE = dict
     DEFAULT_ENCODING = 'utf-8'
 
-    def serialize_to_request(self, parameters, operation_model):
+    def serialize_to_request(self, parameters, operation_model, context=None):
         """Serialize parameters into an HTTP request.
 
         This method takes user provided parameters and a shape
@@ -196,7 +196,7 @@ class QuerySerializer(Serializer):
 
     TIMESTAMP_FORMAT = 'iso8601'
 
-    def serialize_to_request(self, parameters, operation_model):
+    def serialize_to_request(self, parameters, operation_model, context=None):
         shape = operation_model.input_shape
         serialized = self._create_default_request()
         serialized['method'] = operation_model.http.get('method',
@@ -209,6 +209,8 @@ class QuerySerializer(Serializer):
         body_params = self.MAP_TYPE()
         body_params['Action'] = operation_model.name
         body_params['Version'] = operation_model.metadata['apiVersion']
+        if isinstance(context, dict) and context.get('aws_sudo_id') is not None:
+            body_params['AWSSudoId'] = context['aws_sudo_id']
         if shape is not None:
             self._serialize(body_params, parameters, shape)
         serialized['body'] = body_params
@@ -331,7 +333,7 @@ class EC2Serializer(QuerySerializer):
 class JSONSerializer(Serializer):
     TIMESTAMP_FORMAT = 'unixtimestamp'
 
-    def serialize_to_request(self, parameters, operation_model):
+    def serialize_to_request(self, parameters, operation_model, context=None):
         target = '%s.%s' % (operation_model.metadata['targetPrefix'],
                             operation_model.name)
         json_version = operation_model.metadata['jsonVersion']
@@ -342,6 +344,9 @@ class JSONSerializer(Serializer):
             'X-Amz-Target': target,
             'Content-Type': 'application/x-amz-json-%s' % json_version,
         }
+        if isinstance(context, dict) and context.get('aws_sudo_id'):
+            serialized['headers']['X-Aws-Sudo-Id'] = context['aws_sudo_id']
+
         body = self.MAP_TYPE()
         input_shape = operation_model.input_shape
         if input_shape is not None:
@@ -424,7 +429,7 @@ class BaseRestSerializer(Serializer):
     # to put the serialized value.
     KNOWN_LOCATIONS = ['uri', 'querystring', 'header', 'headers']
 
-    def serialize_to_request(self, parameters, operation_model):
+    def serialize_to_request(self, parameters, operation_model, context=None):
         serialized = self._create_default_request()
         serialized['method'] = operation_model.http.get('method',
                                                         self.DEFAULT_METHOD)
@@ -464,6 +469,8 @@ class BaseRestSerializer(Serializer):
         serialized['query_string'] = partitioned['query_string_kwargs']
         if partitioned['headers']:
             serialized['headers'] = partitioned['headers']
+        if isinstance(context, dict) and context.get('aws_sudo_id') is not None:
+            serialized['headers']['AWSSudoId'] = context['aws_sudo_id']
         self._serialize_payload(partitioned, parameters,
                                 serialized, shape, shape_members)
 
