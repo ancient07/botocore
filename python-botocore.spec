@@ -4,7 +4,7 @@
 Name:           python-%{pkgname}
 # NOTICE - Updating this package requires updating python-boto3
 Version:        1.20.14
-Release:        ROCKIT55%{?buildid}%{?dist}
+Release:        ROCKIT56.rc2%{?buildid}%{?dist}
 Summary:        Low-level, data-driven core of boto 3
 
 License:        ASL 2.0
@@ -47,6 +47,9 @@ rm -rf tests/integration
 %{python3_sitelib}/%{pkgname}-*.egg-info/
 
 %changelog
+
+* Mon Mar 10 2025 Linar Nasyyrov <lnasyyrov@k2.cloud> - 1.20.14-ROCKIT56.rc2
+- ec2: add missing instance parameters: HighAvailability, RemoteConsole
 
 * Fri Feb 21 2025 Linar Nasyyrov <lnasyyrov@k2.cloud> - 1.20.14-ROCKIT55.rc3
 - remove cgi module usage, which causes deprecation warnings on Python 3.11
