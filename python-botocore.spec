@@ -48,9 +48,6 @@ rm -rf tests/integration
 
 %changelog
 
-* Mon Mar 10 2025 Linar Nasyyrov <lnasyyrov@k2.cloud> - 1.20.14-ROCKIT56.rc2
-- ec2: add missing instance parameters: HighAvailability, RemoteConsole
-
 * Fri Feb 21 2025 Linar Nasyyrov <lnasyyrov@k2.cloud> - 1.20.14-ROCKIT55.rc3
 - remove cgi module usage, which causes deprecation warnings on Python 3.11
 
