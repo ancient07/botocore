@@ -1709,7 +1709,7 @@
         "availableEnvironmentVersions": {"shape": "StringList"},
         "isRolledBack": {"shape": "Boolean"},
         "supportAccessEnabled": {"shape": "Boolean"},
-        "tags": {"shape":  "TagMap"}
+        "tags": {"shape":  "TagList"}
       }
     },
     "ServiceEndpoint": {
